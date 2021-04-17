@@ -1,0 +1,20 @@
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.entity.Member;
+import com.example.repository.MemberRepository;
+
+@RestController
+public class MemberController {
+	
+	@Autowired
+	MemberRepository memberRepository;
+	
+	public long getContMember() {
+		return memberRepository.count()	;
+	}
+
+}

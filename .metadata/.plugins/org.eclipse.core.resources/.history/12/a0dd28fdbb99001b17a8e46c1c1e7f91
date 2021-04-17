@@ -1,0 +1,12 @@
+package com.example.entity;
+
+import javax.persistence.Table;
+
+@Table
+public class Member {
+	private Long id;
+	private String eMail;
+	private String usrName;
+	private String usrPassowrd;
+
+}

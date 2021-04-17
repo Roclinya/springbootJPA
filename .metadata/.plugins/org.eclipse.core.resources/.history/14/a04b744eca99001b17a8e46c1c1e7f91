@@ -1,0 +1,22 @@
+package com.example.demo;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.demo.entity.Member;
+
+public class EntityTest {
+	
+	@Autowired
+	MemberRepository memberRepository;
+	  @Test
+	    public void whenGetId_ThenSetId() {
+		  Member member = new Member();
+			member.setId(1L);
+			member.setUsrName("My User Name");
+			member.seteMail("usa@mail.com");
+			memberRepository.save(member);
+	    }
+
+}

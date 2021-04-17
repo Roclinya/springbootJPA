@@ -1,0 +1,43 @@
+package com.example.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.repository.MemberRepository;
+
+@RestController
+public class MemberController {
+	
+	@Autowired
+	MemberRepository memberRepository;
+	
+	
+	//@GetMapping是一個組合註釋，可作爲@RequestMapping(method = RequestMethod.GET)的快捷鍵。
+	@GetMapping("get")
+	public long getContMember() {
+		return memberRepository.count()	;
+	}
+	
+	@GetMapping("get/member/{id}")
+	public ResponseEntity<Member>  findMemberById(@PathVariable Long id) {
+		return ResponseEntity.ok(memberRepository.findById(id).get());
+	}
+	
+	@GetMapping("get/members")
+	public ResponseEntity<List<Member>>  findMembers() {
+		return ResponseEntity.ok( memberRepository.findAll());
+	}
+	
+	@PostMapping("add/member")
+	public ResponseEntity<Member>  addMember(@RequestBody Member member) {
+		return ResponseEntity.ok( memberRepository.save(member));
+	}
+
+	@PutMapping("update/member")
+	public ResponseEntity<Member>  updateMember(@RequestBody Member member) {
+		return ResponseEntity.ok( memberRepository.save(member));
+	}
+
+}
