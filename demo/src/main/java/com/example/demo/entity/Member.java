@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+@ApiModel("Member")
 //@Data經由Lombok.jar可以省略以下getter/setter的設定
 @Data
 @Entity
