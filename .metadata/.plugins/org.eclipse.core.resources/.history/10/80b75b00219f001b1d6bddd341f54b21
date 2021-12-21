@@ -1,7 +1,0 @@
-package com.example.demo.configuration;
-
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
-
-public class SecurityConfig implements WebSecurityConfigurer<T> {
-
-}
