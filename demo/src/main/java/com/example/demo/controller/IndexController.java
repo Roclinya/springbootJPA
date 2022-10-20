@@ -23,5 +23,12 @@ public class IndexController {
 		modelAndView.addObject("member", indexService.findeMember(1L));
 		return modelAndView;
 	}
-	
+
+	@GetMapping("indexTest")
+	public ModelAndView indexTest() {
+		ModelAndView modelAndView = new ModelAndView(PAGE);
+		 modelAndView.addObject("member", indexService.contextLoads());
+		 return modelAndView;
+		
+	}
 }

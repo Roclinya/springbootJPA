@@ -23,14 +23,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService);
 		//test1
 	    // 設置角色定義
-//                .withUser("admin")
-////                .password("{noop}123456")
-//                .password("{noop}123456")//{MD5}MD5的編碼結果
-//                .roles("ADMIN", "USER") // 擁有ADMIN 與 USER角色
-//                .and()
-//                .withUser("user")
-//                .password("{noop}123")
-//                .roles("USER");// 擁有USER角色
+		auth.inMemoryAuthentication().withUser("admin")
+//                .password("{noop}123456")
+                .password("{noop}123456")//{MD5}MD5的編碼結果
+                .roles("ADMIN", "USER") // 擁有ADMIN 與 USER角色
+                .and()
+                .withUser("user")
+                .password("{noop}123")
+                .roles("USER");// 擁有USER角色
 	}
 //test2
 //	@Override
@@ -48,12 +48,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.authorizeRequests() // 定義哪些url需要被保護
-		.antMatchers("/open/**").permitAll() // 匹配到"/swagger-ui.html", 不需要身份驗證
-		.antMatchers("/web/**").authenticated() // 匹配到"/swagger-ui.html", 不需要身份驗證
-		.antMatchers("/app/**").permitAll() // 匹配到"/swagger-ui.html", 不需要身份驗證
+		.authorizeRequests() // 定義哪些url需要被保護 
+		.antMatchers("/open/**").permitAll() 
+		.antMatchers("/web/**").authenticated()
+		.antMatchers("/app/**").authenticated()
+//		.antMatchers("/app/**").permitAll() 
 		.antMatchers(HttpMethod.GET).permitAll()  // 定義匹配到"/" 不需要驗證
-		.antMatchers("/h2-console/**").permitAll() // 匹配到"/swagger-ui.html", 不需要身份驗證
+		.antMatchers("/h2-console/**").permitAll() 
 		.and().csrf().ignoringAntMatchers("/h2-console/**")
 		.and().headers().frameOptions().sameOrigin()
 		.and()

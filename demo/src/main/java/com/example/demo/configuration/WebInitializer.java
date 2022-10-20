@@ -9,6 +9,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+//WebApplicationInitializer提供實作DispatchServlet
 public class WebInitializer implements WebApplicationInitializer {
 
 	 @Override

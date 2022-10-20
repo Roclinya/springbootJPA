@@ -1,12 +1,34 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Index</title>
-  </head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<!-- 聽說這一句要，但我沒有要這個標籤，也能用  -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Index</title>
+</head>
 
-  <body>
-    <div>Hello <span th:text="${member.usrName}"></span>!!</div>
-  </body>
+<body>
+	<div>
+		<!-- Hello <span th:text="${member.usrName}"></span>!! -->
+	</div>
+	<form method="post" action="/save/member">
+	<h1>ID</h1>
+		<input type="text" name="id" /> <br/>
+		<h1>eMail</h1>
+		<input type="text" name="eMail" /> <br/>
+		<h1>usrName</h1>
+		<input type="text" name="usrName" /> <br/>
+		<h1>usrPwd</h1>
+		<input type="text" name="usrPwd" /> <br/>
+		<input type="submit" /><br/>
+	</form>
+	   <!--用th:each接收一個可迭代的物件，將thymeleaf傳遞過來的參數"book"，別名為i-->
+    <ul th:each="i:${book}">
+        <!--將i渲染至畫面-->
+        <li th:text="${i}">
+        </li>
+    </ul>
+	<!-- <div>Hello Test <span th:text="*{book.name}"></span>!!</div> -->
+</body>
 </html>

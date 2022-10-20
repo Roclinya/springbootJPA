@@ -11,11 +11,12 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-
+//Swagger注解
 @ApiModel("Member")
 //@Data經由Lombok.jar可以省略以下getter/setter的設定
 @Data
-@Entity
+@Entity 
+//預設Table name即為class name, 如果要指定table name，則需加入@Table(name="tablename")
 @Table(name = "member")
 public class Member implements Serializable {
 	/**

@@ -48,4 +48,34 @@ public class UserEventReg implements Serializable{
 	@CreatedDate
 	private Date reqDate;
 
+	public Long getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Long userID) {
+		this.userID = userID;
+	}
+
+	public Long getEventID() {
+		return eventID;
+	}
+
+	public void setEventID(Long eventID) {
+		this.eventID = eventID;
+	}
+
+	public Date getReqDate() {
+		return reqDate;
+	}
+
+	public void setReqDate(Date reqDate) {
+		this.reqDate = reqDate;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
+
 }
