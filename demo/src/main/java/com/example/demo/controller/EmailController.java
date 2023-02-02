@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.entity.Channel;
 import com.example.demo.entity.Subscription;
 import com.example.demo.entity.User;
+import com.example.demo.service.BarHibernateDAO;
 import com.example.demo.service.ReportRepository;
+
+
 
 @Controller
 @ResponseBody
@@ -24,7 +27,6 @@ public class EmailController {
 	@GetMapping("/test")
 	public Object test() {
 		List<Object[]> reportDetails = reportRepository.find("user1@gmail.com");
-
 		for (Object[] reportDetail : reportDetails) {
 			Channel channel = (Channel) reportDetail[0];
 			Subscription subscription = (Subscription) reportDetail[1];
@@ -34,5 +36,17 @@ public class EmailController {
 		}
 		return null;
 	}
+	
+	@Autowired
+	BarHibernateDAO barHibernateDAO;
+	
+	@GetMapping("/test2")
+	public void test2() {
+		
+		barHibernateDAO.test2();
+	}
+	
+	
+
 
 }

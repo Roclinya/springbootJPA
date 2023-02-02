@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReportRepository {
 
-	// Container-Managed EntityManager
+	// Container-Managed EntityManager 受到容器托管的EntityManager可以直接通过注解@PersistenceContext注入的方式来获得
 	// Persistence Context預設為Transaction-scoped，也就是在方法開始前會啟始交易，結束後停止交易
 	@PersistenceContext
 	// EntityManager不是Thread-safe

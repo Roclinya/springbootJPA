@@ -1,10 +1,13 @@
 package com.example.demo.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 //import org.springframework.data.annotation.Id;
@@ -19,21 +22,25 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "book" )
+@NamedQuery(name ="Book.findAllbyQuery",query = "select b from Book b")
 public class Book {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer bookid;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//    private Integer bookid;
+	@EmbeddedId
+	private BookIdentify bookIdentify;
 	@ApiModelProperty("書名")
 	@Column
     private String name;
 	@ApiModelProperty("作者")
 	@Column
     private String author;
-	public Integer getBookid() {
-		return bookid;
+	
+	public BookIdentify getBookIdentify() {
+		return bookIdentify;
 	}
-	public void setBookid(Integer bookid) {
-		this.bookid = bookid;
+	public void setBookIdentify(BookIdentify bookIdentify) {
+		this.bookIdentify = bookIdentify;
 	}
 	public String getName() {
 		return name;
@@ -47,5 +54,7 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+
+	
 	
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,18 +18,57 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Member;
+import com.example.demo.entity.MemberTemp;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.MemberTempRepository;
 
 @RestController
 public class MemberController {
 	
 	@Autowired
 	MemberRepository memberRepository;
+	@Autowired
+	MemberTempRepository membertemprepository;
 
+	//測試只抓該Entity的單筆資料回傳,使用select回傳單筆資料是否不用接收List ＝> 是
+	@GetMapping("getSingleResult")
+	public ResponseEntity<Member> getSingleResult() {
+		  Member singleResult = memberRepository.getSingleResult();
+		 return ResponseEntity.ok(singleResult);
+	}
+		@GetMapping("copyMemberToMemberTemp")
+		public ResponseEntity<ArrayList<MemberTemp>> copyMemberToMemberTemp() {
+		 List<Member> list = memberRepository.copyMemberToMemberTemp();
+		 ArrayList<MemberTemp> memberTempList = new ArrayList<MemberTemp>();
+		 list.forEach(member->{
+			 MemberTemp memberTemp = new MemberTemp();
+			 memberTemp.setId(member.getId());
+			 memberTemp.setUsrName(member.getUsrName());
+			 memberTemp.seteMail(member.geteMail());
+			 memberTemp.setUsrPwd(member.getUsrPwd());
+			 memberTemp.setUsrPwd2(" NEW "+(int)(Math.random()*10));
+			 memberTemp.setUsrPwd3(" NEW "+(int)(Math.random()*10));
+			 membertemprepository.save(memberTemp);
+			 memberTempList.add(memberTemp);
+			 
+		 });
+		 return ResponseEntity.ok(memberTempList);
+	}
 	@GetMapping("update/{id}")
 	public ResponseEntity<Member> updateＭember(@PathVariable Long id) {
-		 memberRepository.updateMember("this is new data", id)	;
-		 return ResponseEntity.ok(memberRepository.findById(id).get());
+		memberRepository.updateMember("this is new data", id);
+		return ResponseEntity.ok(memberRepository.findById(id).get());
+	}
+	
+	@GetMapping("autoUpdate/{id}")
+	public void autoUpdate(@PathVariable Long id) {
+		 Optional<Member> optMember = memberRepository.findById(id);
+		 if(optMember.isPresent()) {
+			 Member member = optMember.get();
+			 member.setUsrPwd("newPWd");
+			 member.setUsrName("newUserName");
+			 memberRepository.save(member);
+		 }
 	}
 	//@GetMapping是一個組合註釋，可作爲@RequestMapping(method = RequestMethod.GET)的快捷鍵。
 	@GetMapping("get")
