@@ -9,21 +9,23 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.entity.Book;
-import com.example.demo.entity.BookIdentify;
-import com.example.demo.entity.Channel;
+import com.example.demo.entity.*;
 import com.example.demo.repository.BookRepository;
 import com.example.demo.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+//參考 ：https://ithelp.ithome.com.tw/articles/10191117 Day 03 - 透過 Spring Data 操作資料庫
 
 @RestController
 @RequestMapping(value = "/api")
@@ -34,6 +36,31 @@ public class BookController {
 	private BookService bookService;
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Autowired
+	private BookRepository bookRepository;
+	
+	//Spring Data JPA find by @EmbeddedId Partially
+	//http://www.amitph.com/spring-data-jpa-embeddedid-partially/
+	//test data : http://localhost:8080/api/getDataByPartialPK?bookid=10
+	//只使用單一pk bookid=10取得資料查詢結果 兩筆資料
+	//get data by partial of Primary keys
+	@RequestMapping("/getDataByPartialPK")
+	List<Book> getDataByPartialPK(@RequestParam(name = "bookid") int bookid) {
+
+		Book book = new Book();
+		BookIdentify bookIdentify = new BookIdentify();
+		book.setBookIdentify(bookIdentify);
+		bookIdentify.setBookid(bookid);
+
+		Example<Book> songExample = Example.of(book);
+		return bookRepository.findAll(songExample);
+
+	}
+	//delete data by one Pk only
+	@RequestMapping("/deleteByBookIdentifybookid")
+	void deleteByBookIdentifybookid(@RequestParam(name = "bookid") int bookid){
+		bookRepository.deleteByBookIdentify_Bookid(bookid);
+	}
 
 //	@GetMapping("redirct")
 //	public RedirectView handleFoo2() {
@@ -52,8 +79,9 @@ public class BookController {
 	void handleFoo(HttpServletResponse response) throws IOException {
 		response.sendRedirect("https://www.cnblogs.com/easonjim/p/7459486.html");
 	}
+
 	@RequestMapping("/findAllbyQuery")
-	void findAllbyQuery(){
+	void findAllbyQuery() {
 		bookService.findAllbyQuery();
 	}
 
@@ -86,18 +114,18 @@ public class BookController {
 		list = IntStream.range(0, list.size()).mapToObj(i -> {
 			Map<String, String> dataMap = objectMapper.convertValue(channel1, Map.class);
 			dataMap.computeIfPresent("code", (k, v) -> v + "002");
-			//TODO:error
+			// TODO:error
 			dataMap.forEach((k, v) -> {
-				System.out.println(k+":"+v);
+				System.out.println(k + ":" + v);
 				if (v == null || v.toString().isBlank()) {
 					dataMap.put(k, "-");
-					System.out.println("dataMap ->"+dataMap);
+					System.out.println("dataMap ->" + dataMap);
 				}
 			});
 			return dataMap;
 		}).collect(Collectors.toList());
 
-		System.out.println("List = "+list);
+		System.out.println("List = " + list);
 	}
 
 //--------------目前有error--------------
@@ -134,9 +162,10 @@ public class BookController {
 		return modelAndView;
 	}
 
+	// 測試資料：localhost:8080/api/findbyAuthor?author=岸見一郎
 	@GetMapping("findbyAuthor")
-	public ModelAndView findbyAuthor() {
-		List<Book> result = bookService.findbyAuthor();
+	public ModelAndView findbyAuthor(@Valid @RequestParam(name = "author") String author) {
+		List<Book> result = bookService.findbyAuthor(author);
 		result.forEach(System.out::println);
 		// 取出資料list<Book>之中,內容為Author的資料
 		List<String> resAuthor = result.stream().map(e -> e.getAuthor()).collect(Collectors.toList());
@@ -146,9 +175,22 @@ public class BookController {
 		return modelAndView;
 	}
 
+	@GetMapping("findById")
+	public ModelAndView findReserveData(@RequestParam(name = "bookid") int bookid,
+			@RequestParam(name = "bookid2") int bookid2) throws Exception {
+		BookIdentify bookidentify = new BookIdentify(bookid, bookid2);
+		Book book = bookRepository.findById(bookidentify).orElseThrow(() -> new Exception());
+		// 取出資料list<Book>之中,內容為Author的資料
+		System.out.println("抓到的Author資料為 " + book.getAuthor());
+		ModelAndView modelAndView = new ModelAndView(PAGE);// 設定view page
+		modelAndView.addObject("book", book.getAuthor());// 設定回傳物件代稱
+		return modelAndView;
+	}
+
+	// 找出不包含傳入參數bookid的其他資料
 	@GetMapping("findReserveData")
-	public ModelAndView findReserveData() {
-		List<Book> result = bookService.findReserveData();
+	public ModelAndView findReserveData(@RequestParam(name = "bookid") int bookid) {
+		List<Book> result = bookService.findReserveData(bookid);
 		result.forEach(System.out::println);
 		// 取出資料list<Book>之中,內容為Author的資料
 		List<String> resAuthor = result.stream().map(e -> e.getAuthor()).collect(Collectors.toList());
@@ -172,11 +214,12 @@ public class BookController {
 	}
 
 	@GetMapping("findByBookIds")
-	public ModelAndView findByBookIds() {
-		System.out.println("findByBookIds Execute()");
+	public ModelAndView findByBookIds(@RequestParam(name = "bookid") int bookid,
+			@RequestParam(name = "bookid2") int bookid2) {
 //		Optional<Book> result = bookService.getBooksByCompositeId().stream().filter(book -> "億男".equals(book.getName())).findAny();
+		BookIdentify bookidentify = new BookIdentify(bookid, bookid2);
 		// 取得整筆id的資料(目前SQL只有取得單一筆)
-		Optional<Book> result = bookService.findByBookIds();
+		Optional<Book> result = bookService.findByBookIds(bookid, bookid2);
 		Book book = result.get();
 		ModelAndView modelAndView = new ModelAndView(PAGE);// 設定view page
 		modelAndView.addObject("book", book.getAuthor());// 設定回傳物件代稱
@@ -191,16 +234,14 @@ public class BookController {
 		return modelAndView;
 
 	}
+
 	@GetMapping("getMemberList")
 	public ModelAndView getMemberList() {
 		ModelAndView modelAndView = new ModelAndView(PAGE);// 設定view page
 		modelAndView.addObject("book", bookService.getMemberList("Member"));// 設定回傳物件代稱
 		return modelAndView;
-		
-	}
 
-	@Autowired
-	private BookRepository bookRepository;
+	}
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = "/v1/book")

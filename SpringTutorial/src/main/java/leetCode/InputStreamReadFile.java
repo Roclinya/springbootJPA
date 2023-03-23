@@ -44,6 +44,7 @@ public class InputStreamReadFile {
 					BufferedWriter writer = new BufferedWriter(fw);) {
 				
 				while ((line = reader.readLine()) != null) {
+					System.out.println(line);
 					writer.write(line);
 					// must do this: .readLine() will have stripped line endings
 					writer.newLine();

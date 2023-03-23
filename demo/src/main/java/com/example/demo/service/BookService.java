@@ -19,19 +19,20 @@ public interface BookService {
 	List<Book> getBooksByCompositeId();
 
 
-	Optional<Book> findByBookIds();
+	Optional<Book> findByBookIds(int bookid, int bookid2);
 	
 
-	List<Book> findbyAuthor();
+	List<Book> findbyAuthor(String author);
 
 
-	List<Book> findReserveData();
+	List<Book> findReserveData(int bookid);
 
 
 	void insertOrUdateData(Book book);
 
 
 	void findAllbyQuery();
+
 	
 
 	

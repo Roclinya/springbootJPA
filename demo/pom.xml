@@ -18,6 +18,11 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+		<!-- Spring Validator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
 		<dependency>
 			<groupId>javax.persistence</groupId>

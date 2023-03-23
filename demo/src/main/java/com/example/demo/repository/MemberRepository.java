@@ -1,18 +1,14 @@
 package com.example.demo.repository;
 
-import java.util.List;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.Member;
-import com.example.demo.entity.MemberTemp;
+import com.example.demo.entity.*;
 
 //@RepositoryRestResource
 @Transactional
@@ -36,7 +32,21 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	@Query(value ="select m from Member m where m.id <3")
 	List<Member>  copyMemberToMemberTemp();
 	
+	
+	@Query(value ="select m.usrName,m.eMail from Member m where m.id <3")
+	List<String> selectPartOfMember();
+	
 	@Query(value ="select m from Member m where m.id =1")
 	Member getSingleResult();
+	
+
+
+	@Query(value="select m.usrName,m.eMail,leader.leaderAbibity"+
+	" from member m left join memberLeader leader on leader.id = m.id ",nativeQuery = true )
+	List<Map<String,String>> getLeftJoinMemberMap();
+	
+	@Query(value="select new com.example.demo.entity.MemberVo(m.usrName,m.eMail,leader.leaderAbibity)"+
+	" from Member m left join MemberLeader leader on leader.eMail = m.eMail ")
+	List<MemberVo> getLeftJoinMemberVo();
 
 }

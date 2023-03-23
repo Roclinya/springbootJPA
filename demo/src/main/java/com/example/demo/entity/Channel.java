@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table
@@ -15,6 +16,7 @@ public class Channel {
 
     private String code;
 
+    @NotBlank(message = "描述不可為空")
     private Long subscriptionId;
 
 	public Long getId() {

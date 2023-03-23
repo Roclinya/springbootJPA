@@ -26,7 +26,9 @@ spring:
     user:
      name: admin
      password: admin
-      
+#server:
+#    error:
+#     include-message: always     
     
  
 

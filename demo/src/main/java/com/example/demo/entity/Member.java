@@ -2,15 +2,10 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import io.swagger.annotations.ApiModel;
-import lombok.Data;
+import lombok.*;
 //Swagger注解
 @ApiModel("Member")
 //@Data經由Lombok.jar可以省略以下getter/setter的設定

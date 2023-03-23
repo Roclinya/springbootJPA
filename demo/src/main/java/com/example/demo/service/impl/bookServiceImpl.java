@@ -66,16 +66,16 @@ public class bookServiceImpl implements BookService {
 		return bookRepository.findByBookIdentifyBookId2(1);
 	}
 	
-	public List<Book> findbyAuthor() {
-		return bookRepository.findByAuthor("岸見一郎");
+	public List<Book> findbyAuthor(String author) {
+		return bookRepository.findByAuthor(author); //岸見一郎
 	}
 
-	public  List<Book> findReserveData() {
-		return bookRepository.findReserveData(1);
+	public  List<Book> findReserveData(int bookid) {
+		return bookRepository.findReserveData(bookid);
 	}
 	@Override
-	public Optional<Book> findByBookIds() {
-		return bookRepository.findByBookIds(2, 2);
+	public Optional<Book> findByBookIds(int bookid, int bookid2) {
+		return bookRepository.findByBookIds(bookid, bookid2);
 	}
 
 	@Override
