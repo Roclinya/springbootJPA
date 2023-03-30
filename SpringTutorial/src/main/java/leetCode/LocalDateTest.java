@@ -9,7 +9,8 @@ public class LocalDateTest {
 	public static void main(String[] args) {
 		// 日期測試 localDate轉客製化字串YYYYMMDD
 		LocalDate localDate = LocalDate.now();// For reference
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYYMMDD");
+		System.out.println(localDate);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 		String formattedString = localDate.format(formatter);
 		System.out.println(formattedString);
 

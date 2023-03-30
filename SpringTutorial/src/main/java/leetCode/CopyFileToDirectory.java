@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.FileSystemResource;
 
 public class CopyFileToDirectory {
 
@@ -25,7 +26,7 @@ public class CopyFileToDirectory {
 
 	private static void nioCopy() throws IOException {
 		String srcfilePath = "input.txt";
-		String dstDir = "NioCopyFile.txt";
+		String dstDir = "./NioCopyFile.txt"; // ./可以不加  等於同一層
 		Path fromFile = Paths.get(srcfilePath);
 		Path toFile = Paths.get(dstDir);
 		Files.copy(fromFile, toFile, StandardCopyOption.REPLACE_EXISTING);
@@ -35,11 +36,12 @@ public class CopyFileToDirectory {
 	private static void apacheCommonsCopy() throws IOException {
 
 		String srcFilePath = "input.txt";
-		String dstDir = "./copyFile";
+		String dstDir = "./copyFile/output"; //同一層的資料夾
 
+		System.out.println(new FileSystemResource(srcFilePath));
 		File srcFile = new File(srcFilePath);
 		File dstDirFile = new File(dstDir);
-
+System.out.println(dstDirFile);
 		System.out.println("The contents of the destination directory before copy - " + Arrays.toString(dstDirFile.listFiles()));
 		System.out.println("Copying file - " + srcFilePath + " to directory - " + dstDir);
 

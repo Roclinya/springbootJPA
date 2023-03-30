@@ -1,12 +1,8 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.*;
+import java.util.stream.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -14,11 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.*;
@@ -60,6 +52,20 @@ public class BookController {
 	@RequestMapping("/deleteByBookIdentifybookid")
 	void deleteByBookIdentifybookid(@RequestParam(name = "bookid") int bookid){
 		bookRepository.deleteByBookIdentify_Bookid(bookid);
+	}
+	//find data by one Pk only
+	//test data : http://localhost:8080/api/findByBookIdentifybookid?bookid=10
+	@RequestMapping("findByBookIdentifybookid")
+	ModelAndView findByBookIdentifybookid(@RequestParam(name = "bookid") int bookid){
+		List<Book> result = bookRepository.findByBookIdentifyBookid(bookid); //findByBookIdentify_Bookid 用底線分隔也行
+		ArrayList<String> list = new ArrayList<String>();
+		result.forEach(e->{
+			System.out.println("查詢結果："+e.getAuthor());
+			list.add(e.getAuthor());
+		});
+		ModelAndView modelAndView = new ModelAndView(PAGE);// 設定view page
+		modelAndView.addObject("book", list.toString());// 設定回傳物件代稱
+		return modelAndView;
 	}
 
 //	@GetMapping("redirct")
@@ -139,7 +145,11 @@ public class BookController {
 	@GetMapping("insertData")
 	public ModelAndView insertData() {
 		Book book = new Book();
-		book.setBookIdentify(new BookIdentify(13, 13));
+		BookIdentify bookIdentify = new BookIdentify();
+		bookIdentify.setBookid(13);
+		bookIdentify.setBookid2(13);
+		book.setBookIdentify(bookIdentify);
+//		book.setBookIdentify(new BookIdentify(13, 13));
 		book.setAuthor("新增Author");
 		book.setName("新增Name");
 		bookService.insertData(book);
@@ -152,7 +162,10 @@ public class BookController {
 	@GetMapping("insertOrUdateData")
 	public ModelAndView insertOrUdateData() {
 		Book book = new Book();
-		book.setBookIdentify(new BookIdentify(14, 14));
+		BookIdentify bookIdentify = new BookIdentify();
+		bookIdentify.setBookid(14);
+		bookIdentify.setBookid2(14);
+		book.setBookIdentify(bookIdentify);
 		book.setAuthor("新增Author2");
 		book.setName("新增Name2");
 		bookService.insertOrUdateData(book);
@@ -175,11 +188,14 @@ public class BookController {
 		return modelAndView;
 	}
 
+	//http://localhost:8080/api/findReserveData?bookid=1
 	@GetMapping("findById")
 	public ModelAndView findReserveData(@RequestParam(name = "bookid") int bookid,
 			@RequestParam(name = "bookid2") int bookid2) throws Exception {
-		BookIdentify bookidentify = new BookIdentify(bookid, bookid2);
-		Book book = bookRepository.findById(bookidentify).orElseThrow(() -> new Exception());
+		BookIdentify bookIdentify = new BookIdentify();
+		bookIdentify.setBookid(bookid);
+		bookIdentify.setBookid2(bookid2);
+		Book book = bookRepository.findById(bookIdentify).orElseThrow(() -> new Exception());
 		// 取出資料list<Book>之中,內容為Author的資料
 		System.out.println("抓到的Author資料為 " + book.getAuthor());
 		ModelAndView modelAndView = new ModelAndView(PAGE);// 設定view page
@@ -213,11 +229,11 @@ public class BookController {
 		return modelAndView;
 	}
 
+//http://localhost:8080/api/findByBookIds?bookid=1&bookid2=1
 	@GetMapping("findByBookIds")
 	public ModelAndView findByBookIds(@RequestParam(name = "bookid") int bookid,
 			@RequestParam(name = "bookid2") int bookid2) {
 //		Optional<Book> result = bookService.getBooksByCompositeId().stream().filter(book -> "億男".equals(book.getName())).findAny();
-		BookIdentify bookidentify = new BookIdentify(bookid, bookid2);
 		// 取得整筆id的資料(目前SQL只有取得單一筆)
 		Optional<Book> result = bookService.findByBookIds(bookid, bookid2);
 		Book book = result.get();
