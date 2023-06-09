@@ -1,15 +1,7 @@
 package leetCode;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.*;
+import java.util.stream.*;
 
 public class Java8Stream {
 
@@ -42,19 +34,41 @@ public class Java8Stream {
 //		System.out.println(stream2.collect(Collectors.toList()));
 
 		// 測試mapToObj by object
-		Stream<Object> stream3 = stream.mapToObj(i -> {
+		Stream<Column> stream3 = stream.mapToObj(i -> {
 			Column column = new Column();
 			column.setHeader("Header" + i);
 			column.setType("Type" + i);
 			return column;
 		});
-		List<Object> columnList = stream3.collect(Collectors.toList());
-		System.out.println(columnList);
+		List<Column> columnList = stream3.collect(Collectors.toList());
+		columnList.forEach(e->{
+			System.out.println(e.getHeader());
+		});
+		
+		
+		//reduce test 自動加總同樣欄位的資料使用
 
-		Map[] columns = new Map[columnList.size()];
-		columns = columnList.toArray(columns);
-//			System.out.println(columns);
+		List<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("Type", "M4");
+		map.put("Amt", "1.1f");
+		map.put("Car", "BMW");
+		HashMap<String, String> map2 = new HashMap<String, String>();
+		map2.put("Type", "GLC200");
+		map2.put("Amt", "2.2f");
+		map2.put("Car", "Benz");
+		listOfMaps.add(map);
+		listOfMaps.add(map2);
+		// the Integer value 0 is the identity. 
+		//It stores the initial value of the reduction operation and also 
+		//the default result when the stream of Integer values is empty.
+		Float result = listOfMaps.stream().map(e->Float.valueOf(e.get("Amt"))).reduce(0f,Float::sum);
+		System.out.println(">> "+result);
 
+
+		
+		
 	
 
 	}

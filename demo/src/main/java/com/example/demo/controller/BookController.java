@@ -42,6 +42,7 @@ public class BookController {
 		Book book = new Book();
 		BookIdentify bookIdentify = new BookIdentify();
 		book.setBookIdentify(bookIdentify);
+		//只設定了一個primaryKey bookid, bookid2沒設定
 		bookIdentify.setBookid(bookid);
 
 		Example<Book> songExample = Example.of(book);

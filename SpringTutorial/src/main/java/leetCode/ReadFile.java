@@ -14,7 +14,7 @@ public class ReadFile {
 
 	public static void main(String[] args) throws UnsupportedEncodingException, IOException {
 
-		//在複製檔案時是先將檔案整個讀取到記憶體後後才寫入。若是檔案非常大的時候會占滿記憶體並導致伺服器掛掉。請改成讀取一定量後就先寫入檔案，避免發生記憶體耗盡。
+		// 在複製檔案時是先將檔案整個讀取到記憶體後後才寫入。若是檔案非常大的時候會占滿記憶體並導致伺服器掛掉。請改成讀取一定量後就先寫入檔案，避免發生記憶體耗盡。
 		try (FileOutputStream fos = new FileOutputStream("input.txt");
 				OutputStreamWriter outfile = new OutputStreamWriter(fos, "MS950");
 				PrintWriter msgfile = new PrintWriter(outfile, true);) {
@@ -26,11 +26,11 @@ public class ReadFile {
 			// 例外處理
 			System.out.println("file not found");
 		}
-		
+
 		ArrayList<String> list = new ArrayList<String>();
 
 		try (FileReader fr = new FileReader("input.txt"); BufferedReader bfr = new BufferedReader(fr);) {
-			
+
 			String instr = null;
 			while ((instr = bfr.readLine()) != null) {
 				System.out.println(instr);
@@ -44,17 +44,18 @@ public class ReadFile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		try (FileOutputStream fos2 = new FileOutputStream("input2.txt");
 				OutputStreamWriter outfile2 = new OutputStreamWriter(fos2, "MS950");
 				PrintWriter msgfile2 = new PrintWriter(outfile2, true);) {
-			
-			list.forEach(e->{
+
+			list.forEach(e -> {
 				msgfile2.println(e);
 			});
+			list.forEach(e -> {
+				msgfile2.println(e + " 2nd");
+			});
 		}
-		
 
 	}
 

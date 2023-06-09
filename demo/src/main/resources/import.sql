@@ -28,3 +28,6 @@ INSERT INTO `memberLeader` (`id`, `eMail`,`leaderAbibity`) VALUES (3, '4@gmail.c
 INSERT INTO `user` (`id`, `email`, `subscriptionId`) VALUES (1, 'user1@gmail.com', 100);
 INSERT INTO `channel` (`id`, `code`, `subscriptionId`) VALUES (1, 'chanelcode01', 100);
 INSERT INTO `subscription` (`id`, `code`) VALUES (100,  100);
+
+
+insert  into DATEENTITY(DATENUMBER,BIRTHDAY,SQLDATE,UPDATED_ON) values('1','2023-02-02','2023-02-03', '2023-02-04'); 

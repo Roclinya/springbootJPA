@@ -34,7 +34,9 @@ public class MemberController {
 	@GetMapping("getLeftJoinMemberVo")
 	public ResponseEntity<List<MemberVo>> getLeftJoinMemberVo() {
 		List<MemberVo> result = memberRepository.getLeftJoinMemberVo();
-		System.out.println("getLeftJoin查詢結果"+result);
+		result.forEach(memberVo -> {
+			System.out.println("UsrName "+memberVo.getUsrName()+" EMail "+memberVo.getEMail()+" LeaderAbibity "+memberVo.getLeaderAbibity());
+		});
 		return ResponseEntity.ok(result);
 	}
 	@GetMapping("getLeftJoinMemberMap")

@@ -16,6 +16,7 @@ public class Date_Calendar_addDays {
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, day);
 		System.out.println(sdf.format(calendar.getTime()));
+		String aa = sdf.format(calendar.getTime());
 
 	}
 

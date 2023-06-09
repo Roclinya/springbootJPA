@@ -1,15 +1,12 @@
 package com.mockitotutorial.happyhotel.booking;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.*;
 
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.*;
 
-class Test07VerifyingBehavior {
+class Test08Spies {
 
 	private BookingService bookingService;
 	private PaymentService paymentServiceMock;
@@ -23,7 +20,9 @@ class Test07VerifyingBehavior {
 		// creat mocks for these 4 dependencies of BookingService
 		this.paymentServiceMock = mock(PaymentService.class); // create dummy object of PaymentService
 		this.roomServiceMock = mock(RoomService.class); // create dummy object of RoomService
-		this.bookingDAOMock = mock(BookingDAO.class); // create dummy object of BookingDAO
+		// mock = dummy object with no real logic
+		// spy = real object with real logic that we can modify
+		this.bookingDAOMock = spy(BookingDAO.class); // create dummy object of BookingDAO
 		this.mailSenderMock = mock(MailSender.class); // create dummy object of MailSender
 
 		// instaniate BookingService by providing the mocks as the dependencies
@@ -32,7 +31,7 @@ class Test07VerifyingBehavior {
 	}
 
 	@Test
-	void should_InvokePayment_When_Prepaid() {
+	void should_MakeBooking_When_InputOk() {
 		// Behavior-driven development => BDD styles
 		// given
 		BookingRequest bookingRequest = new BookingRequest("1", LocalDate.of(2023, 01, 01), LocalDate.of(2023, 01, 05),
@@ -44,34 +43,32 @@ class Test07VerifyingBehavior {
 		// we want to verify the paymentService mock was called.
 		// In other words, we want to make sure that paymentService.pay() was executed
 		// correctly in makeBooking method.
-		bookingService.makeBooking(bookingRequest);
+		String bookingId = bookingService.makeBooking(bookingRequest);
 		// then
-		// On this line,we check whether the method pay() from the paymentServiceMock
-		// was called with these specific argument.
-//		verify(paymentServiceMock).pay(bookingRequest, 400.0); //price 輸入500會fail
-		verify(paymentServiceMock, times(1)).pay(bookingRequest, 400.0);
-		// this Mockito method checks if any other methods form this mock were called.
-		// If paymentServiceMock is called
-		// again for a second time, this will also throw an exception.
-		// verify(paymentServiceMock,times(2)).pay(bookingRequest, 400.0);
-		// //time改成2就會throw exception
-		verifyNoMoreInteractions(paymentServiceMock);
+		verify(bookingDAOMock).save(bookingRequest);
+		System.out.println("bookingId= " + bookingId);
 
 	}
+	
+	//mocks: when(mock.method()).thenReturn()
+	//spies: doReturn().when(spy).method())
+	
+	//mock(partial mock) = a real object that with real methods that we can modify 
 
 	@Test
-	void should_NotInvokePayment_When_NotPrepaid() {
+	void should_CancelBooking_When_InputOk() {
 		// Behavior-driven development => BDD styles
 		// given
 		BookingRequest bookingRequest = new BookingRequest("1", LocalDate.of(2023, 01, 01), LocalDate.of(2023, 01, 05),
-				2, false); // => isPrepaid=false neglect paymentService.pay(bookingRequest, price);
-
+				2, true);// => isPrepaid=true execute paymentService.pay(bookingRequest, price);
+		bookingRequest.setRoomId("1.3");
+		String bookingId = "1";
+		
+		doReturn(bookingRequest).when(bookingDAOMock).get(bookingId);
 		// when
-		bookingService.makeBooking(bookingRequest);
+		bookingService.cancelBooking(bookingId);
 		// then
-		//never() : we expect the paymentServiceMock to never be called with the method pay()
-		// bookingRequest => any() & double price => anyDouble : we don't want it to be called with any kind of input.
-		verify(paymentServiceMock, never()).pay(any(), anyDouble());
+
 	}
 
 }

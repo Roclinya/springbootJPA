@@ -14,13 +14,29 @@ import org.springframework.core.io.FileSystemResource;
 public class CopyFileToDirectory {
 
 	public static void main(String[] args) throws IOException {
+		
+		//資料夾不存在,建立一個
+		File file =new File("./NewFolder");    
+		//如果資料夾不存在則建立    
+		if  (!file .exists()  && !file .isDirectory())      
+		{       
+		    System.out.println("//不存在");  
+		    file .mkdir();    
+		} else   
+		{  
+		    System.out.println("//目錄存在");  
+		} 
+		
+		
+		
+		
         //以下實現兩種copy檔案方式, java 7以後推薦使用NIO
 		//https://mkyong.com/java/how-to-copy-file-in-java/
 		
-		// Apache Commons IO
-		apacheCommonsCopy();
-		// Files.copy (NIO)
-		nioCopy();
+//		// Apache Commons IO
+//		apacheCommonsCopy();
+//		// Files.copy (NIO)
+//		nioCopy();
 		System.out.println("-------");
 	}
 
@@ -29,7 +45,7 @@ public class CopyFileToDirectory {
 		String dstDir = "./NioCopyFile.txt"; // ./可以不加  等於同一層
 		Path fromFile = Paths.get(srcfilePath);
 		Path toFile = Paths.get(dstDir);
-		Files.copy(fromFile, toFile, StandardCopyOption.REPLACE_EXISTING);
+		Files.copy(fromFile, toFile, StandardCopyOption.REPLACE_EXISTING); //如果我們想避免 FileAlreadyExistException，那麼我們可以使用 REPLACE_EXISTING 選項替換
 
 	}
 

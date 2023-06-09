@@ -38,6 +38,7 @@ public class DealFile {
 			//以下兩種方式一樣都是把cause往上丟
 			// 作法A
 			MyException ie = new MyException("file is interrupted!!!!", e);
+//			e.printStackTrace();
 			// 作法B
 //			MyException ie = new MyException("file is interrupted");
 //			ie.initCause(e);

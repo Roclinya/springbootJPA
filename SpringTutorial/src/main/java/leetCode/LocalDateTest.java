@@ -1,7 +1,7 @@
 package leetCode;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class LocalDateTest {
@@ -10,6 +10,8 @@ public class LocalDateTest {
 		// 日期測試 localDate轉客製化字串YYYYMMDD
 		LocalDate localDate = LocalDate.now();// For reference
 		System.out.println(localDate);
+		LocalDateTime localDateTime =  LocalDateTime.now();
+		System.out.println(Timestamp.valueOf(localDateTime));
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 		String formattedString = localDate.format(formatter);
 		System.out.println(formattedString);
