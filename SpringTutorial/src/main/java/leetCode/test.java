@@ -75,6 +75,12 @@ public class Test {
 		arrayMap.put("a1", "aa");
 		arrayMap.put("b1", "bb");
 		arrayMapList.add(arrayMap);
+		if(arrayMapList.size()>5) {
+			System.out.println("true");
+		}else {
+			System.out.println("false");
+		}
+		
 		HashMap[] mapToArrayList = new HashMap[arrayMapList.size()];
 		System.out.println(mapToArrayList);
 		arrayMapList.toArray(mapToArrayList);
