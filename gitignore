@@ -1,4 +1,5 @@
 # 忽略.class的所有檔案
+**/.idea/
 *.class
 .DS_Store
 target/
