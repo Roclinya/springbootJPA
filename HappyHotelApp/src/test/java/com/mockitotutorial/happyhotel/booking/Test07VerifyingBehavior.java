@@ -36,7 +36,7 @@ class Test07VerifyingBehavior {
 		// Behavior-driven development => BDD styles
 		// given
 		BookingRequest bookingRequest = new BookingRequest("1", LocalDate.of(2023, 01, 01), LocalDate.of(2023, 01, 05),
-				2, true);// => isPrepaid=true execute paymentService.pay(bookingRequest, price);
+				2, true);// => isPrepaid = true means paymentService.pay(bookingRequest, price) would be called;
 
 		// when
 		// we simply know the method was invoked,but we don't know what happened behind

@@ -21,6 +21,9 @@ public class IndexServiceImpl implements IndexService {
 	@Autowired
 	private MemberRepository memberRepository;
 
+
+
+
 	@Override
 	public Member findeMember(Long id) {
 		Optional<Member> o = memberRepository.findById(id);
@@ -33,10 +36,16 @@ public class IndexServiceImpl implements IndexService {
 	
 	@Override
 	    public  List contextLoads() {
-	        List resultList = entityManger.createNativeQuery("select * from book").getResultList();
+	        List resultList = getEntityManger().createNativeQuery("select * from book").getResultList();
 	        System.out.println("長度:"+resultList.size());
 	        return resultList;
 
 	    }
+
+	public EntityManager getEntityManger() {
+		return entityManger;
+	}
+
+
 
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 //Advice也是一種AOP的實現
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler {
 	// 捕捉其他所有异常
 //	@ExceptionHandler(Exception.class)

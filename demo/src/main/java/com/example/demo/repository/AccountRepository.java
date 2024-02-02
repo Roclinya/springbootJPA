@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Account;
 
-@Transactional
+//@Transactional
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
 

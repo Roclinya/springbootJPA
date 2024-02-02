@@ -9,4 +9,6 @@ public interface IndexService {
 	Member findeMember(Long id);
 	
 	List contextLoads();
+
+
 }

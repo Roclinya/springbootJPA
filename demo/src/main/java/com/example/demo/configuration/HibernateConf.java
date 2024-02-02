@@ -1,9 +1,6 @@
 package com.example.demo.configuration;
 
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -11,8 +8,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.zaxxer.hikari.HikariDataSource;
-
+import javax.sql.DataSource;
+import java.util.Properties;
+@EnableTransactionManagement //add at 2024/01/29
 @Configuration
 public class HibernateConf {
 

@@ -5,6 +5,10 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.*;
 
+/**
+ * Mock預設的回傳參數測試
+ *
+ */
 class Test02DefaultReturnValues {
 
 	private BookingService bookingService;
@@ -25,11 +29,15 @@ class Test02DefaultReturnValues {
 		// instaniate BookingService by providing the mocks as the dependencies
 		this.bookingService = new BookingService(paymentServiceMock, roomServiceMock, bookingDAOMock, mailSenderMock);
 		
-		System.out.println("List returned " + roomServiceMock.getAvailableRooms());
-		System.out.println("Object returned " + roomServiceMock.findAvailableRoomId(null));
-		System.out.println("Primitive returned " + roomServiceMock.getRoomCount());
+		
+		// By default ,Mockito will returns nice mocks,meaning that they will return
+		// values that actually make some sense.
+		System.out.println("List returned " + roomServiceMock.getAvailableRooms());//the mock will return an empty list by default
+		System.out.println("Object returned " + roomServiceMock.findAvailableRoomId(null));//the mock will return null by default
+		System.out.println("Primitive returned " + roomServiceMock.getRoomCount());//the mock will return 0 by default
 		
 		/*
+		 * By default, Mokito returns nice mocks. 預設這些Mock會回傳她原型該回傳的型態資料
 		 * Nice Mocks default values:
 		 * 1.empty list
 		 * 2.null object
@@ -44,9 +52,7 @@ class Test02DefaultReturnValues {
 		// given
 		int expetcted = 0;
 		// when
-		// By default ,Mockito will returns nice mocks,meaning that they will return
-		// values that actually make some sense.
-		int actual = bookingService.getAvailablePlaceCount(); // the mock will return an empty list by default
+		int actual = bookingService.getAvailablePlaceCount(); // the mock will return 0 because of return type is int
 		// then
 		assertEquals(expetcted, actual);
 	}

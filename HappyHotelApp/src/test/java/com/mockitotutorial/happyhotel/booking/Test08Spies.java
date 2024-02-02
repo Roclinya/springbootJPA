@@ -21,7 +21,7 @@ class Test08Spies {
 		this.paymentServiceMock = mock(PaymentService.class); // create dummy object of PaymentService
 		this.roomServiceMock = mock(RoomService.class); // create dummy object of RoomService
 		// mock = dummy object with no real logic
-		// spy = real object with real logic that we can modify
+		// spy(partial mock) = real object with real logic that we can modify
 		this.bookingDAOMock = spy(BookingDAO.class); // create dummy object of BookingDAO
 		this.mailSenderMock = mock(MailSender.class); // create dummy object of MailSender
 
@@ -66,7 +66,7 @@ class Test08Spies {
 		
 		doReturn(bookingRequest).when(bookingDAOMock).get(bookingId);
 		// when
-		bookingService.cancelBooking(bookingId);
+		bookingService.cancelBooking(bookingId); //bookingDAOMock is spy ,thus it return actual value for actual bookingID,whis is null.
 		// then
 
 	}

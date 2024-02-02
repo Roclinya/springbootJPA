@@ -35,7 +35,7 @@ class Test01FirstMocks {
 		// given
 		BookingRequest bookingRequest = new BookingRequest("1", LocalDate.of(2023, 01, 01), LocalDate.of(2023, 01, 05),
 				2, false);
-		double expected = 4 * 2 * 50.0;
+		double expected = 4 * 2 * 50.0; //BookingService.BASE_PRICE_USD=50.0
 		// when
 		double actual = bookingService.calculatePrice(bookingRequest);
 		// then

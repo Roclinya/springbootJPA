@@ -37,7 +37,8 @@ class Test06Machers {
 		BookingRequest bookingRequest = new BookingRequest("2", LocalDate.of(2023, 01, 01), LocalDate.of(2023, 01, 05),
 				2, true);
 		//we want to inform the mock to throw an exception for any kind of booking request
-		when(this.paymentServiceMock.pay(any(), anyDouble())).thenThrow(BusinessException.class);
+//		when(this.paymentServiceMock.pay(any(), anyDouble())).thenThrow(BusinessException.class);
+		when(this.paymentServiceMock.pay(any(), eq(400.0))).thenThrow(BusinessException.class);
 		// when
 		Executable executable = () -> bookingService.makeBooking(bookingRequest);
 		// then

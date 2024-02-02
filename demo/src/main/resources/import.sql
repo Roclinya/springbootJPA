@@ -30,4 +30,17 @@ INSERT INTO `channel` (`id`, `code`, `subscriptionId`) VALUES (1, 'chanelcode01'
 INSERT INTO `subscription` (`id`, `code`) VALUES (100,  100);
 
 
-insert  into DATEENTITY(DATENUMBER,BIRTHDAY,SQLDATE,UPDATED_ON) values('1','2023-02-02','2023-02-03', '2023-02-04'); 
+insert  into `DateEntity`(`dateNumber`,`birthday`,`updated_on`,`sqlDate`) values('1','2023-02-02','2023-02-03', '2023-02-04'); 
+
+--以下tutorials 和 comments的insert順序不能顛倒,@ManyToOne 多方comments要在後面才insert,否則會報錯
+insert  into `tutorials`(`id`,`title`,`description`,`published`) values(1L,'Spring Data','Spring Data Description',true);
+insert  into `tutorials`(`id`,`title`,`description`,`published`) values(2L,'Hibernate','Hibernate ORM Description',true);
+insert  into `tutorials`(`id`,`title`,`description`,`published`) values(3L,'Spring JPA','Spring Data JPA Description',true);
+
+insert  into `comments`(`id`,`content`,`tutorial_id`) values(1L,'Tut#1 Comment 1',1L);
+insert  into `comments`(`id`,`content`,`tutorial_id`) values(2L,'Tut#2 Comment 2',2L);
+insert  into `comments`(`id`,`content`,`tutorial_id`) values(3L,'Tut#3 Comment 3',3L);
+-- comments的id有主鍵生成策略,可以不用insert 用如下寫法
+--insert  into `comments`(`content`,`tutorial_id`) values('Tut#1 Comment 1',1L);
+--insert  into `comments`(`content`,`tutorial_id`) values('Tut#2 Comment 2',2L);
+--insert  into `comments`(`content`,`tutorial_id`) values('Tut#3 Comment 3',3L);

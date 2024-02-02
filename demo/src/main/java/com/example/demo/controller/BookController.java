@@ -36,6 +36,8 @@ public class BookController {
 	//test data : http://localhost:8080/api/getDataByPartialPK?bookid=10
 	//只使用單一pk bookid=10取得資料查詢結果 兩筆資料
 	//get data by partial of Primary keys
+	
+	//{{url}}/api/getDataByPartialPK?bookid=1
 	@RequestMapping("/getDataByPartialPK")
 	List<Book> getDataByPartialPK(@RequestParam(name = "bookid") int bookid) {
 

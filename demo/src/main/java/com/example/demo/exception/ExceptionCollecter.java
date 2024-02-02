@@ -11,10 +11,15 @@ public class ExceptionCollecter  extends RuntimeException {
     private String strExceptionCode;
     // 自訂例外訊息
     private String strExceptionMessage;
+    
+    public ExceptionCollecter(String message, Throwable cause) {
+    	   super(message, cause);
+    }
  
     public ExceptionCollecter(String strExceptionCode, String strExceptionMessage) {
         this.strExceptionCode = strExceptionCode;
         this.strExceptionMessage = strExceptionMessage;
+
     }
 
 	public String getStrExceptionCode() {

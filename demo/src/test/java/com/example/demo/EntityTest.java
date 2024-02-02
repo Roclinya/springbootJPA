@@ -36,7 +36,7 @@ public class EntityTest {
 			memberRepository.save(member);
 			System.out.print("-----beforeInit function Activated-----");
 	    }
-	  
+	  @Test
 	  void testNotNull() {
 		  
 		  Assertions.assertNotNull(memberRepository);
