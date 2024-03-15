@@ -1,9 +1,9 @@
 package com.example.demo.entity;
 
+import javax.persistence.*;
+
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-
-import javax.persistence.*;
 
 @ApiModel("MemberLeader")
 @Data
@@ -18,7 +18,7 @@ public class MemberLeader {
 	@Column(name = "eMail")
 	private String eMail;
     
-	@Column(name = "leaderAbility")
-	private String leaderAbility;
+	@Column(name = "leaderAbibity")
+	private String leaderAbibity;
 
 }

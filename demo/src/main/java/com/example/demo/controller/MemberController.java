@@ -1,41 +1,41 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Member;
-import com.example.demo.entity.MemberTemp;
-import com.example.demo.entity.MemberVo;
-import com.example.demo.repository.MemberRepository;
-import com.example.demo.repository.MemberTempRepository;
-import com.example.demo.service.CheckTransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entity.Member;
+import com.example.demo.entity.MemberTemp;
+import com.example.demo.entity.MemberVo;
+import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.MemberTempRepository;
+
 @RestController
-@RequestMapping(value = "/Member")
 public class MemberController {
 
 	@Autowired
 	MemberRepository memberRepository;
 	@Autowired
 	MemberTempRepository membertemprepository;
-	@Autowired
-	CheckTransactionService checkTransactionService;
-	@GetMapping("checkTransaction")
-	public void checkTransaction(){
-		checkTransactionService.checkData();
-	}
 
 	@GetMapping("getLeftJoinMemberVo")
 	public ResponseEntity<List<MemberVo>> getLeftJoinMemberVo() {
 		List<MemberVo> result = memberRepository.getLeftJoinMemberVo();
 		result.forEach(memberVo -> {
-			System.out.println("UsrName "+memberVo.getUsrName()+" EMail "+memberVo.getEMail()+" LeaderAbility "+memberVo.getLeaderAbility());
+			System.out.println("UsrName "+memberVo.getUsrName()+" EMail "+memberVo.getEMail()+" LeaderAbibity "+memberVo.getLeaderAbibity());
 		});
 		return ResponseEntity.ok(result);
 	}
@@ -46,12 +46,6 @@ public class MemberController {
 		System.out.println("getLeftJoin查詢結果"+result);
 		return ResponseEntity.ok(result);
 	}
-//	@GetMapping("getAllWithMapResult")
-//	public List<MemberVo> getAllWithMapResult() {
-//		List<Map<String, Object>> results = memberRepository.findAllWithMapResult();
-//		return results.stream().map(result -> new MemberVo(result))
-//				.collect(Collectors.toList());
-//	}
 
 	// 測試只抓該Entity的單筆資料回傳,使用select回傳單筆資料是否不用接收List ＝> 是
 	@GetMapping("getSingleResult")
@@ -61,8 +55,8 @@ public class MemberController {
 	}
 
 	@GetMapping("selectPartOfMember")
-	public ResponseEntity<List<Map<String,String>>> selectPartOfMember() {
-		List<Map<String,String>> result = memberRepository.selectPartOfMember();
+	public ResponseEntity<List<String>> selectPartOfMember() {
+		List<String> result = memberRepository.selectPartOfMember();
 		System.out.println("選取結果 " + result);
 //		System.out.println("選取usrName "+ result.get(0).get("usrName"));
 		return ResponseEntity.ok(result);
