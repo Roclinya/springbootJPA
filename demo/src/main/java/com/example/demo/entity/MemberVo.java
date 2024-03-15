@@ -1,10 +1,13 @@
 package com.example.demo.entity;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.*;
+import java.io.Serializable;
+import java.util.Map;
+
 //@Value
 @Data
 @NoArgsConstructor
@@ -20,13 +23,24 @@ public class MemberVo implements Serializable{
 
 	private String eMail;
 
-	private String leaderAbibity;
+	private String leaderAbility;
 
-//	public MemberVo(String usrName, String eMail, String leaderAbibity) {
+	public static final String USR_NAME = "usrName";
+	public static final String E_MAIL = "eMail";
+	public static final String LEADER_ABILITY = "leaderAbility";
+
+	public MemberVo(Map<String, Object> values) {
+		this.usrName = values.get(USR_NAME) != null ? (String) values.get(USR_NAME): null;;
+		this.eMail = values.get(E_MAIL) != null ? (String) values.get(E_MAIL): null;;
+		this.leaderAbility = values.get(LEADER_ABILITY) != null ? (String) values.get(LEADER_ABILITY): null;;
+	}
+
+
+//	public MemberVo(String usrName, String eMail, String leaderAbility) {
 //		super();
 //		this.usrName = usrName;
 //		this.eMail = eMail;
-//		this.leaderAbibity = leaderAbibity;
+//		this.leaderAbility = leaderAbility;
 //	}
 //	
 	

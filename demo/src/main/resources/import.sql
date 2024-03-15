@@ -20,9 +20,9 @@ INSERT INTO `member` (`id`, `eMail`, `usrName`,`usrPwd`) VALUES (1, '1@gmail.com
 INSERT INTO `member` (`id`, `eMail`, `usrName`,`usrPwd`) VALUES (2, '2@gmail.com', '安伯托‧艾可','pwd2');
 INSERT INTO `member` (`id`, `eMail`, `usrName`,`usrPwd`) VALUES (3, '3@gmail.com', '崔恩‧葛瑞芬','pwd3');
 
-INSERT INTO `memberLeader` (`id`,  `eMail`,`leaderAbibity`) VALUES (1, '1@gmail.com', 'Java');
-INSERT INTO `memberLeader` (`id`,  `eMail`,`leaderAbibity`) VALUES (2, '2@gmail.com', 'React');
-INSERT INTO `memberLeader` (`id`, `eMail`,`leaderAbibity`) VALUES (3, '4@gmail.com', 'TypeScript');
+INSERT INTO `memberLeader` (`id`,  `eMail`,`leaderAbility`) VALUES (1, '1@gmail.com', 'Java');
+INSERT INTO `memberLeader` (`id`,  `eMail`,`leaderAbility`) VALUES (2, '2@gmail.com', 'React');
+INSERT INTO `memberLeader` (`id`, `eMail`,`leaderAbility`) VALUES (3, '4@gmail.com', 'TypeScript');
 
 
 INSERT INTO `user` (`id`, `email`, `subscriptionId`) VALUES (1, 'user1@gmail.com', 100);
