@@ -25,7 +25,7 @@ INSERT INTO `memberLeader` (`id`,  `eMail`,`leaderAbility`) VALUES (2, '2@gmail.
 INSERT INTO `memberLeader` (`id`, `eMail`,`leaderAbility`) VALUES (3, '4@gmail.com', 'TypeScript');
 
 
-INSERT INTO `user` (`id`, `email`, `subscriptionId`) VALUES (1, 'user1@gmail.com', 100);
+INSERT INTO `user` (`id`, `email`, `subscriptionId`,`password`) VALUES (1, 'user1@gmail.com', 100,'123');
 INSERT INTO `channel` (`id`, `code`, `subscriptionId`) VALUES (1, 'chanelcode01', 100);
 INSERT INTO `subscription` (`id`, `code`) VALUES (100,  100);
 
